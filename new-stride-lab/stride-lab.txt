@@ -4,9 +4,9 @@
 
 
 +--------------------------------------------------------+
-|Keeper of the record:                                   |
+|Keeper of the record: Matthew Wong                      |
 |--------------------------------------------------------|
-|Lab partner:                                            |
+|Lab partner: Andersen Prince                            |
 +--------------------------------------------------------+
 
 
@@ -37,56 +37,44 @@ Q1a: If you know the block size in bytes for a cache and the number of
      lines in the cache, what will be the total size of the cache in
      bytes? 
 
-
-
-
-
-
-
-
-
+     It is (lines) * (block size)
 
 
 Q1b: For testcachesim, describe in detail how performance changes as
      the size of the cache gets larger, presuming the size of the
      test array remains the same?  
 
+     The performance has ton evicts if the cache can't hold the entire 
+     array, as it will evict the early elements, which will be referenced
+     later in the current cycle or early in the next cycle.
+     Larger block size improves evictions, as it can check more things before 
+     evicting (resulting in less total evictions), and larger line 
+     count allows for more lines to remain in the cache at a time, allowing 
+     for further data to stay in the cache.  
 
-
-
-
-
-
-
-
-
-
-
+     Until the entire array can be in the cache, at which point, it will 
+     only miss the initial run through and hit every time after. 
+     Larger sizes will not really improve efficiency beyond this critical
+     point.
 
 Q1c. Is there a point beyond which performance stops improving as
      cache size increases? Why?
 
-
-
-
-
-
-
-
-
+     Yes, when the entire array in the cache, as it always hit after 
+     that point and never evict. This means that a larger cache won't 
+     help save time there. 
 
 Q1d. Sometimes performance is excellent (that is, the cache gives us a
      very good speed up) but then making the test array just a little
      bigger reduces performance dramatically. Why?
 
-
-
-
-
-
-
-
-
+     It is a hard threshold, where the cache goes from being able to 
+     hold the entire array (which causes no evicts) to having to evict 
+     one element, which will be referenced very soon as it loops through 
+     the array. This makes pretty much element evict right before they 
+     are used again, drastically reducing performance. 
+     (aka having the full array in the cache is the boundry between 
+     having to evict almost everything and having to evict nothing)
 
 
 Block sizes
@@ -100,14 +88,16 @@ Q2.  Are bigger blocks always better? Worse? Assuming the total size
      of the cache remains the same, and for an application like
      testcachesim, which block size is best?
 
+     Bigger blocks are better when working with data that adjacent in memory 
+     which would be arrays/unboxed data structures, or higher stride, 
+     while more lines are better with data that is not necessarily 
+     next to each other such as having a bunch of ints or using pointers alot.
 
-
-
-
-
-
-
-
+     Note that bigger blocks in general is usually better (if you had 
+     to make a choice) as the total number of evicts will be divided 
+     by the amount of elements you can hold in the block. This means that
+     bigger blocks should be the default vs more lines as the benefits of 
+     bigger blocks is more significant than more lines. (Less total evicts)
 
 
 Writing data
@@ -119,24 +109,24 @@ Q3.  Reread the part of the instructions that explains the
      If you understand this, then you understand a lot about how
      "write-back" caches work.
 
-
-
-
-
-
-
-
-
-
+     The reads_for_writes will be zero when the block size is equivalent
+     to the size of one element. This is because since they writing the 
+     element (which is the whole block), there is no reason to get the 
+     data from main memory. This is because the whole thing will be 
+     overwritten anyways, so it might as well not read from main memory.
+     Thus, it only needs to write to the address and never read_for_write. 
 
 
 Q4.  Explain why, for applications that update memory repeatedly, a cache that
      performs better may finish with more dirty blocks than a cache
      that does not perform well on the same application.
 
+     A cache with a lot of dirty blocks meant that they were updating the 
+     memory on the cache side more vs having to send it directly to memory,
+     which leave less dirty blocks (as it is updated already). 
 
-
-
+     Updating something to be dirty is much faster, as if you set it twice,
+     then you only need the change the dirty block which is fast in cache.
 
 
 =================================================================
@@ -146,19 +136,13 @@ Q4.  Explain why, for applications that update memory repeatedly, a cache that
 Q5.  Can you describe a situation in which a fully associative cache
      will outperform a direct-mapped cache?
 
+     If you are accessing disperate variables (which are far apart)
+     and happen to map to the same line, then fully associative chache 
+     will outperform because it won't have to evict, whereas the direct 
+     map will be wasting space evicting things while having space. 
 
-
-
-
-
-
-
-
-
-
-
-
-
+     In otherwords, cases where referenced blocks are far apart will make 
+     fully associative chaches better. 
 
 Submit this file using script
 
