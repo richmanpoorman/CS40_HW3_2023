@@ -84,4 +84,7 @@ int main(int argc, char *argv[])
         }
 
         assert(false);    // the rest of this function is not yet implemented
+        (void) time_file_name;
+        (void) rotation;
+        (void) i;
 }

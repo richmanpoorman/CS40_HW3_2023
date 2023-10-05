@@ -61,6 +61,9 @@ all: ppmtrans a2test timing_test
 
 ## Linking step (.o -> executable program)
 
+uarray2bTest: uarray2b.o uarray2.o uarray2bTest.o
+	$(CC) $(LDFLAGS) $^ -o $@ $(LDLIBS)
+
 a2test: a2test.o uarray2b.o uarray2.o a2plain.o
 	$(CC) $(LDFLAGS) $^ -o $@ $(LDLIBS)
 
