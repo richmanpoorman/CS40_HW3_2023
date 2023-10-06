@@ -35,8 +35,11 @@ usage(const char *progname)
 
 int main(int argc, char *argv[]) 
 {
-        char *time_file_name = NULL;
-        int   rotation       = 0;
+        char *time_file_name    = NULL;
+        int   rotation          = 0;
+        bool  hasFlipVertical   = false;
+        bool  hasFlipHorizontal = false;
+        bool  hasTranspose      = false;
         int   i;
 
         /* default to UArray2 methods */
@@ -74,6 +77,26 @@ int main(int argc, char *argv[])
                         }
                 } else if (strcmp(argv[i], "-time") == 0) {
                         time_file_name = argv[++i];
+                } else if (strcmp(argv[i], "-flip") == 0) { 
+                        /* ADDED FLIPPING */
+                        if (!(i + 1 < argc)) {      /* no flip value */
+                                usage(argv[0]);
+                        }
+
+                        i++;
+                        if (strcmp(argv[i], "horizontal") == 0) {
+                                hasFlipHorizontal = true;
+                        } else if (strcmp(argv[i], "vertical") == 0) {
+                                hasFlipVertical = true;
+                        } else {              /* Not a valid flip */
+                                fprintf(stderr, 
+                                        "Flip must be horizontal or vertical\n"
+                                        );      
+                                usage(argv[0]);
+                        }
+                } else if (strcmp(argv[i], "-transpose") == 0) {
+                        /* ADDED TRANSPOSE */
+                        hasTranspose = true;
                 } else if (*argv[i] == '-') {
                         fprintf(stderr, "%s: unknown option '%s'\n", argv[0],
                                 argv[i]);
@@ -88,7 +111,7 @@ int main(int argc, char *argv[])
 
         FILE *inputFile = stdin;
         if (i < argc) {
-                inputFile = fopen(argc[i], "r");
+                inputFile = fopen(argv[i], "r");
                 assert(inputFile != NULL);
         }
         Pnm_ppm ppm = Pnm_ppmread(inputFile, methods); 
@@ -96,18 +119,37 @@ int main(int argc, char *argv[])
                 fclose(inputFile);
         }
 
-        FILE *timeFile = NULL;
+        FILE *timerFile = NULL;
         if (time_file_name != NULL) {
-                timeFile = fopen(time_file_name, "a");
-                assert(timeFile != NULL);
+                timerFile = fopen(time_file_name, "a");
+                assert(timerFile != NULL);
         }
 
         // TODO: Decide which function to run...
-        void (*transform)(Pnm_ppm, A2Methods_mapfun) == NULL;
+        void (*transform)(Pnm_ppm, A2Methods_mapfun) = NULL;
+        if (hasTranspose) {
+                transform = *transpose;
+        } else if (hasFlipVertical) {
+                transform = *flipVertical;
+        } else if (hasFlipHorizontal) {
+                transform = *flipHorizontal;
+        } else if (rotation == 90) {
+                transform = *rotate90;
+        } else if (rotation == 180) {
+                transform = *rotate180;
+        } else if (rotation == 270) {
+                transform = *rotate270;
+        } else {
+                transform = *rotate0;
+        }
         
+        
+        imageMapper(ppm, map, transform, timerFile);
+
+        Pnm_ppmwrite(stdout, ppm);
 
 
-        if (timeFile != NULL) {
-                fclose(timeFile);
+        if (timerFile != NULL) {
+                fclose(timerFile);
         }
 }
