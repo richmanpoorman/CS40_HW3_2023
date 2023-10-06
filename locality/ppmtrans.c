@@ -8,6 +8,8 @@
 #include "a2plain.h"
 #include "a2blocked.h"
 #include "pnm.h"
+#include "imageMapper.h"
+#include "imageTransforms.h"
 
 #define SET_METHODS(METHODS, MAP, WHAT) do {                    \
         methods = (METHODS);                                    \
@@ -20,6 +22,7 @@
                 exit(1);                                        \
         }                                                       \
 } while (false)
+
 
 static void
 usage(const char *progname)
@@ -83,8 +86,28 @@ int main(int argc, char *argv[])
                 }
         }
 
-        assert(false);    // the rest of this function is not yet implemented
-        (void) time_file_name;
-        (void) rotation;
-        (void) i;
+        FILE *inputFile = stdin;
+        if (i < argc) {
+                inputFile = fopen(argc[i], "r");
+                assert(inputFile != NULL);
+        }
+        Pnm_ppm ppm = Pnm_ppmread(inputFile, methods); 
+        if (i < argc) {
+                fclose(inputFile);
+        }
+
+        FILE *timeFile = NULL;
+        if (time_file_name != NULL) {
+                timeFile = fopen(time_file_name, "a");
+                assert(timeFile != NULL);
+        }
+
+        // TODO: Decide which function to run...
+        void (*transform)(Pnm_ppm, A2Methods_mapfun) == NULL;
+        
+
+
+        if (timeFile != NULL) {
+                fclose(timeFile);
+        }
 }
