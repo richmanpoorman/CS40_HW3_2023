@@ -37,11 +37,12 @@ void UArray2b_map(UArray2b_T array2b,
                   void *elem, void *cl),
                   void *cl);
 
-void UArray2b_mapDataToUArray2(int i, int j, UArray2_T array2, 
+void UArray2b_mapDataToUArray2(int col, int row, UArray2_T array2, 
                            void *elem, void *cl);
-void UArray2b_mapToFreeUArray2(int c, int r, UArray2_T array2, 
+void UArray2b_mapToFreeUArray2(int col, int row, UArray2_T array2, 
                            void *elem, void *cl);
-
+void UArray2b_UArray2MapForBlockwise(int col, int row, UArray2_T array2, 
+                                     void *elem, void *cl);
 /*
 * it is a checked run-time error to pass a NULL UArray2b_T
 * to any function in this interface
@@ -54,11 +55,11 @@ UArray2b_T UArray2b_new (int width, int height, int size, int blocksize)
         assert(size > 0);
         assert(blocksize > 0);
         UArray2b_T newUArray2b    = ALLOC(sizeof(*newUArray2b));
-        int        blockMemSize   = blocksize * blocksize * size;
         int        blockWidth     = (width + blocksize  - 1) / blocksize;
         int        blockHeight    = (height + blocksize - 1) / blocksize;
 
-        UArray2_T blocks = UArray2_new(blockWidth, blockHeight, blockMemSize);
+        UArray2_T blocks = UArray2_new(blockWidth, blockHeight, 
+                                       sizeof(UArray_T));
 
         newUArray2b -> width     = width;
         newUArray2b -> height    = height;
@@ -71,20 +72,19 @@ UArray2b_T UArray2b_new (int width, int height, int size, int blocksize)
         return newUArray2b;
 }
 
-void UArray2b_mapDataToUArray2(int c, int r, UArray2_T array2, 
+void UArray2b_mapDataToUArray2(int col, int row, UArray2_T array2, 
                            void *elem, void *cl)
 {
         assert(array2 != NULL);
         UArray2b_T *data      = cl;
         UArray_T   *block     = elem;
-        int         blocksize = ((*data) -> blocksize) * 
-                                ((*data) -> blocksize);
+        int         blocksize = (*data) -> blocksize;
         int         size      = (*data) -> size;
-        UArray_T    newBlock  = UArray_new(blocksize, size);
+        UArray_T    newBlock  = UArray_new(blocksize * blocksize, size);
         
         *block = newBlock;
-        (void) c;
-        (void) r;
+        (void) col;
+        (void) row;
         (void) array2;
 }
 /* new blocked 2d array: blocksize as large as possible provided
@@ -110,14 +110,15 @@ void UArray2b_free (UArray2b_T *array2b)
         FREE(array2b);
         *array2b = NULL;
 }
-void UArray2b_mapToFreeUArray2(int c, int r, UArray2_T array2, 
+void UArray2b_mapToFreeUArray2(int col, int row, UArray2_T array2, 
                            void *elem, void *cl)
 {
         UArray_T *block = elem;
         
         UArray_free(block);
-        (void) c;
-        (void) r;
+        *block = NULL;
+        (void) col;
+        (void) row;
         (void) array2;
         (void) cl;
 }
@@ -166,6 +167,14 @@ void *UArray2b_at(UArray2b_T array2b, int column, int row)
         return data;
         
 }
+
+struct UArray2b_blockwise_closure {
+        UArray2b_T array2b;
+        void (*apply)(int col, int row, UArray2b_T array2b,
+                      void *elem, void *cl);
+        void *cl;
+};
+
 /* visits every cell in one block before moving to another block */
 void UArray2b_map(UArray2b_T array2b,
                   void apply(int col, int row, UArray2b_T array2b,
@@ -174,38 +183,47 @@ void UArray2b_map(UArray2b_T array2b,
 {
         assert(array2b != NULL);
 
-        UArray2_T blocks  = array2b -> blocks;
-        
-        int       width = UArray2b_width(array2b);
-        int       height = UArray2b_height(array2b);
-        int       blocksize = UArray2b_blocksize(array2b);
+        struct UArray2b_blockwise_closure closure = {
+                array2b,
+                apply,
+                cl
+        };
+        UArray2_map_row_major(array2b -> blocks, 
+                              UArray2b_UArray2MapForBlockwise, &closure);
 
-        int       blockWidth = UArray2_width(blocks);
-        int       blockHeight = UArray2_height(blocks);
+}
+
+void UArray2b_UArray2MapForBlockwise(int col, int row, UArray2_T array2, 
+                                     void *elem, void *cl) 
+{
+        struct UArray2b_blockwise_closure *closure = cl;
+        UArray2b_T array2b = closure -> array2b;
+
+        int       width       = UArray2b_width(array2b);
+        int       height      = UArray2b_height(array2b);
+        int       blocksize   = UArray2b_blocksize(array2b);
         int       blockLength = blocksize * blocksize;
+        UArray_T *block       = UArray2_at(array2, col, row);
 
-        for (int col = 0; col < blockWidth; col++) {
-                for (int row = 0; row < blockHeight; row++) {
+        int       inArrayCol  = width  - col * blocksize;
+        int       inArrayRow  = height - row * blocksize;
 
-                        UArray_T *block  = UArray2_at(blocks, col, row);
-                        int  inArrayCol  = width  - col * blocksize;
-                        int  inArrayRow  = height - row * blocksize;
+        for (int index = 0; index < blockLength; index++) {
+                int inBlockCol = index / blocksize;
+                int inBlockRow = index % blocksize;
+                int absCol     = col * blocksize + inBlockCol;
+                int absRow     = row * blocksize + inBlockRow;
 
-                        for (int index = 0; index < blockLength; index++) {
-                                int inBlockCol = index / blocksize;
-                                int inBlockRow = index % blocksize;
-                                int absCol = col * blocksize + inBlockCol;
-                                int absRow = row * blocksize + inBlockRow;
-                                if (inBlockCol >= inArrayCol) {
-                                        continue;
-                                }
-                                if (inBlockRow >= inArrayRow) {
-                                        continue;
-                                }
-                                void *data = UArray_at(*block, index);
-                                apply(absCol, absRow, array2b, data, cl);
-                        }
+                if (inBlockCol >= inArrayCol) {
+                        continue;
                 }
-        }
+                if (inBlockRow >= inArrayRow) {
+                        continue;
+                }
 
+                void *data = UArray_at(*block, index);
+                closure -> apply(absCol, absRow, array2b, data, closure -> cl);
+        }
+        (void) elem;
+        
 }
