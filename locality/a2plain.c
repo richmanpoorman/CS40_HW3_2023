@@ -10,12 +10,30 @@
 /* A2Methods_T that we implement.               */
 /************************************************/
 
-
+/***********************************new**************************************
+ * 
+ * Inputs  :    (int) width         -
+ *              (int) height        -
+ *              (int) size          -
+ * Returns :	(A2Methods_UArray2) -
+ * Expects : 	
+ * Notes   :   	
+ ****************************************************************************/
 static A2Methods_UArray2 new(int width, int height, int size)
 {
         return UArray2_new(width, height, size);
 }
 
+/*****************************new_with_blocksize*****************************
+ * 
+ * Inputs  :    (int) width         -
+ *              (int) height        -
+ *              (int) size          -
+ *              (int) blocksize     -
+ * Returns :	(A2Methods_UArray2)
+ * Expects : 	
+ * Notes   :   	
+ ****************************************************************************/
 static A2Methods_UArray2 new_with_blocksize(int width, int height, int size,
                                             int blocksize)
 {
@@ -23,35 +41,90 @@ static A2Methods_UArray2 new_with_blocksize(int width, int height, int size,
         return new(width, height, size);
 }
 
+/*********************************a2free*************************************
+ * 
+ * Inputs  :    (A2Methods_UArray2) *array2p -
+ * Returns :	(void)                       -
+ * Expects : 	
+ * Notes   :   	
+ ****************************************************************************/
 static void a2free(A2Methods_UArray2 *array2p) 
 {
         UArray2_free((UArray2_T *)array2p);
 }
 
+/************************************width***********************************
+ * 
+ * Inputs  :    (A2Methods_UArray2) array2 -
+ * Returns :	(int)                      -
+ * Expects : 	
+ * Notes   :   	
+ ****************************************************************************/
 static int width(A2Methods_UArray2 array2)
 {
         return UArray2_width(array2);
 }
 
+/**********************************height************************************
+ * 
+ * Inputs  :    (A2Methods_UArray2) array2 -
+ * Returns :	(int)                      -
+ * Expects : 	
+ * Notes   :   	
+ ****************************************************************************/
 static int height(A2Methods_UArray2 array2)
 {
         return UArray2_height(array2);
 }
+
+/**************************************size**********************************
+ * 
+ * Inputs  :    (A2Methods_UArray2) array2 -
+ * Returns :	(int)                      -
+ * Expects : 	
+ * Notes   :   	
+ ****************************************************************************/
 static int size(A2Methods_UArray2 array2)
 {
         return UArray2_size(array2);
 }
+
+/********************************blocksize***********************************
+ * 
+ * Inputs  :    (A2Methods_UArray2) array2 -
+ * Returns :	(int)                      -
+ * Expects : 	
+ * Notes   :   	
+ ****************************************************************************/
 static int blocksize(A2Methods_UArray2 array2)
 {
         (void) array2;
         return 1;
 }
 
+/**************************************at************************************
+ * 
+ * Inputs  :    (A2Methods_UArray2) array2 -
+ *              int col                    -
+ *              int row                    -
+ * Returns :	(A2Methods_Object)         -
+ * Expects : 	
+ * Notes   :   	
+ ****************************************************************************/
 static A2Methods_Object *at(A2Methods_UArray2 array2, int col, int row)
 {
         return UArray2_at(array2, col, row);
 }
 
+/******************************map_row_major*********************************
+ * 
+ * Inputs  :    (A2Methods_Uarray2) uarray2 -
+ *              (A2Methods_applyfun) apply  -
+ *              (void) cl                   -     
+ * Returns :	(void)                      -
+ * Expects : 	
+ * Notes   :   	
+ ****************************************************************************/
 static void map_row_major(A2Methods_UArray2 uarray2,
                           A2Methods_applyfun apply,
                           void *cl)
@@ -59,6 +132,15 @@ static void map_row_major(A2Methods_UArray2 uarray2,
         UArray2_map_row_major(uarray2, (UArray2_applyfun*)apply, cl);
 }
 
+/*******************************map_col_major*******************************
+ * 
+ * Inputs  :    (A2Methods_UArray2) uarray2 -
+ *              (A2Mthods_applyfun) apply   -
+ *              (void)                      -
+ * Returns :	(void)                      -
+ * Expects : 	
+ * Notes   :   	
+ ****************************************************************************/
 static void map_col_major(A2Methods_UArray2 uarray2,
                           A2Methods_applyfun apply,
                           void *cl)
@@ -66,11 +148,29 @@ static void map_col_major(A2Methods_UArray2 uarray2,
         UArray2_map_col_major(uarray2, (UArray2_applyfun*)apply, cl);
 }
 
+/*******************************small_closure********************************
+ * 
+ * Inputs  :    
+ * Returns :	
+ * Expects : 	
+ * Notes   :   	
+ ****************************************************************************/
 struct small_closure {
         A2Methods_smallapplyfun *apply; 
         void                    *cl;
 };
 
+/**********************************apply_small********************************
+ * 
+ * Inputs  :    (int) i           -
+ *              (int) j           -
+ *              UArray2_T uarray2 -
+ *              (void) *elem      -
+ *              (void) *cl        -     
+ * Returns :	
+ * Expects : 	
+ * Notes   :   	
+ ****************************************************************************/
 static void apply_small(int i, int j, UArray2_T uarray2,
                         void *elem, void *vcl)
 {
@@ -81,6 +181,15 @@ static void apply_small(int i, int j, UArray2_T uarray2,
         cl->apply(elem, cl->cl);
 }
 
+/****************************small_map_row_major*****************************
+ * 
+ * Inputs  :    (A2Methods_UArray2) a2          -
+ *              (A2Methods_smallapplyfun) apply -
+ *              (void) *cl                      -
+ * Returns :	(void)                          -
+ * Expects : 	
+ * Notes   :   	
+ ****************************************************************************/
 static void small_map_row_major(A2Methods_UArray2        a2,
                                 A2Methods_smallapplyfun  apply,
                                 void *cl)
@@ -89,6 +198,15 @@ static void small_map_row_major(A2Methods_UArray2        a2,
         UArray2_map_row_major(a2, apply_small, &mycl);
 }
 
+/*****************************small_map_col_major****************************
+ * 
+ * Inputs  :    (A2Methods_UArray2) a2          -
+ *              (A2Methods_smallapplyfun) apply -
+ *              (void) *cl                      -
+ * Returns :	(void)                          -
+ * Expects : 	
+ * Notes   :   	
+ ****************************************************************************/
 static void small_map_col_major(A2Methods_UArray2        a2,
                                 A2Methods_smallapplyfun  apply,
                                 void *cl)
@@ -97,7 +215,13 @@ static void small_map_col_major(A2Methods_UArray2        a2,
         UArray2_map_col_major(a2, apply_small, &mycl);
 }
 
-
+/***********************uarray2_methods_plain_struct*************************
+ * 
+ * Inputs  :    
+ * Returns :	
+ * Expects : 	
+ * Notes   :   	
+ ****************************************************************************/
 static struct A2Methods_T uarray2_methods_plain_struct = {
         new,
         new_with_blocksize,
