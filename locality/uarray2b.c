@@ -37,7 +37,7 @@ void UArray2b_map(UArray2b_T array2b,
                   void *elem, void *cl),
                   void *cl);
 
-void UArray2b_mapDataToUArray2(int col, int row, UArray2_T array2, 
+void UArray2b_mapNewToUArray2(int col, int row, UArray2_T array2, 
                            void *elem, void *cl);
 void UArray2b_mapToFreeUArray2(int col, int row, UArray2_T array2, 
                            void *elem, void *cl);
@@ -66,20 +66,19 @@ UArray2b_T UArray2b_new (int width, int height, int size, int blocksize)
         newUArray2b -> size      = size;
         newUArray2b -> blocksize = blocksize;
         newUArray2b -> blocks    = blocks;
-
-        UArray2_map_row_major(blocks, UArray2b_mapDataToUArray2, newUArray2b);
+        UArray2_map_row_major(blocks, UArray2b_mapNewToUArray2, newUArray2b);
 
         return newUArray2b;
 }
 
-void UArray2b_mapDataToUArray2(int col, int row, UArray2_T array2, 
+void UArray2b_mapNewToUArray2(int col, int row, UArray2_T array2, 
                            void *elem, void *cl)
 {
         assert(array2 != NULL);
-        UArray2b_T *data      = cl;
+        UArray2b_T  data      = cl;
         UArray_T   *block     = elem;
-        int         blocksize = (*data) -> blocksize;
-        int         size      = (*data) -> size;
+        int         blocksize = data -> blocksize;
+        int         size      = data -> size;
         UArray_T    newBlock  = UArray_new(blocksize * blocksize, size);
         
         *block = newBlock;
@@ -102,19 +101,24 @@ UArray2b_T UArray2b_new_64K_block(int width, int height, int size)
         }
         return UArray2b_new(width, height, size, blocksize);
 }
+
 void UArray2b_free (UArray2b_T *array2b) 
 {
         assert(array2b != NULL && *array2b != NULL);
+        UArray2_T blocks = (*array2b) -> blocks;
         UArray2_map_row_major((*array2b) -> blocks, 
                               UArray2b_mapToFreeUArray2, NULL);
-        FREE(array2b);
-        *array2b = NULL;
+        UArray2_free(&blocks);
+        FREE(*array2b);
+        
 }
 void UArray2b_mapToFreeUArray2(int col, int row, UArray2_T array2, 
                            void *elem, void *cl)
 {
         UArray_T *block = elem;
-        
+        if (elem == NULL) {
+                return;
+        }
         UArray_free(block);
         *block = NULL;
         (void) col;
@@ -146,6 +150,7 @@ int UArray2b_blocksize(UArray2b_T array2b)
 /* return a pointer to the cell in the given column and row.
 * index out of range is a checked run-time error
 */
+
 void *UArray2b_at(UArray2b_T array2b, int column, int row) 
 {
         assert(array2b != NULL);
@@ -225,5 +230,5 @@ void UArray2b_UArray2MapForBlockwise(int col, int row, UArray2_T array2,
                 closure -> apply(absCol, absRow, array2b, data, closure -> cl);
         }
         (void) elem;
-        
+
 }

@@ -1,35 +1,56 @@
 #include <string.h>
 
+#include <mem.h>
 #include <a2plain.h>
 #include "uarray2.h"
+#include <assert.h>
 
 /************************************************/
 /* Define a private version of each function in */
 /* A2Methods_T that we implement.               */
 /************************************************/
 
+
 static A2Methods_UArray2 new(int width, int height, int size)
 {
-        //TODO: Implement this function and remove the dummy return statement.
-        (void) width;
-        (void) height;
-        (void) size;
-        return NULL;
+        return UArray2_new(width, height, size);
 }
 
 static A2Methods_UArray2 new_with_blocksize(int width, int height, int size,
                                             int blocksize)
 {
-        //TODO: Implement this function and remove the dummy return statement.
-        (void) width;
-        (void) height;
-        (void) size;
         (void) blocksize;
-        return NULL;
+        return new(width, height, size);
 }
 
+static void a2free(A2Methods_UArray2 *array2p) 
+{
+        UArray2_free((UArray2_T *)array2p);
+}
 
-/* TODO: ...many more private (static) definitions follow */
+static int width(A2Methods_UArray2 array2)
+{
+        return UArray2_width(array2);
+}
+
+static int height(A2Methods_UArray2 array2)
+{
+        return UArray2_height(array2);
+}
+static int size(A2Methods_UArray2 array2)
+{
+        return UArray2_size(array2);
+}
+static int blocksize(A2Methods_UArray2 array2)
+{
+        (void) array2;
+        return 1;
+}
+
+static A2Methods_Object *at(A2Methods_UArray2 array2, int col, int row)
+{
+        return UArray2_at(array2, col, row);
+}
 
 static void map_row_major(A2Methods_UArray2 uarray2,
                           A2Methods_applyfun apply,
@@ -80,11 +101,20 @@ static void small_map_col_major(A2Methods_UArray2        a2,
 static struct A2Methods_T uarray2_methods_plain_struct = {
         new,
         new_with_blocksize,
-        /* ... other functions follow in order,
-         *     with NULL for those not implemented ...
-         */
+        a2free,
+        width,
+        height,
+        size,
+        blocksize,
+        at,
+        map_row_major,
+        map_col_major,
+        NULL,                   /* map_block_major */
+        map_row_major,
+        small_map_row_major,
+        small_map_col_major,
+        NULL,                   /* small_map_block_major */
+        small_map_row_major
 };
-
-// finally the payoff: here is the exported pointer to the struct
 
 A2Methods_T uarray2_methods_plain = &uarray2_methods_plain_struct;
