@@ -50,10 +50,10 @@ void UArray2b_UArray2MapForBlockwise(int col, int row, UArray2_T array2,
 
 /*********************************UArray2b_new*********************************
  * 
- * Inputs  : (int) width      - retrieves the width 
- *           (int) height     - 
- *           (int) size       -
- *           (int) blocksize  - 
+ * Inputs  : (int) width      - Denotes the 2-D array's width 
+ *           (int) height     - Denotes the 2-D array's height
+ *           (int) size       - Denotes the 2-D array's size
+ *           (int) blocksize  - Denotes the 2-D array's blocksizes
  * Returns : (UArray2b_T)     -
  * Expects : 	
  * Notes   :   	
@@ -83,10 +83,10 @@ UArray2b_T UArray2b_new (int width, int height, int size, int blocksize)
 
 /****************************UArray2b_mapNewToUArray2*************************
  * 
- * Inputs  :  (int) col          - 
- *            (int) row          - 
- *            (UArray2_T) array2 -
- *            (void) *elem       -
+ * Inputs  :  (int) col          - Denotes the 2-D array's column
+ *            (int) row          - Denotes the 2-D array's row
+ *            (UArray2_T) array2 - a 2-D array
+ *            (void) *elem       - 
  *            (void) *cl         -
  * Returns :  (void)             -
  * Expects : 	
@@ -110,10 +110,10 @@ void UArray2b_mapNewToUArray2(int col, int row, UArray2_T array2,
 
 /****************************UArray2b_new_64K_block***************************
  * 
- * Inputs  :    (int) width  - 
- *              (int) height -
- *              (int) size   -
- * Returns :	(UArray2b_T) -
+ * Inputs  :    (int) width  - Denotes the blocked 2-D array's width
+ *              (int) height - Denotes the blocked 2-D array's height
+ *              (int) size   - Denotes the blocked 2-D array's size
+ * Returns :	(UArray2b_T) - an updated 2-D array 
  * Expects : 	
  * Notes   :   	
  ****************************************************************************/
@@ -135,8 +135,8 @@ UArray2b_T UArray2b_new_64K_block(int width, int height, int size)
 
 /*******************************UArray2b_free*********************************
  * 
- * Inputs  :    (UArray2b_T) *array2b -
- * Returns :	(void)                -
+ * Inputs  :    (UArray2b_T) *array2b - a 2-D array
+ * Returns :	(void)                - nothing
  * Expects : 	
  * Notes   :   	
  ****************************************************************************/
@@ -153,10 +153,10 @@ void UArray2b_free (UArray2b_T *array2b)
 
 /****************************UArray2b_mapToFreeUArray*************************
  * 
- * Inputs  :    (int) col          -
- *              (int) row          -
- *              (UArray2_T) array2 -
- *              (void) *elem       -
+ * Inputs  :    (int) col          - Denotes the 2-D array column
+ *              (int) row          - Denotes the 2-D array row
+ *              (UArray2_T) array2 - Denotes a 2-D array
+ *              (void) *elem       - Denotes 
  *              (void) *cl         -
  * Returns :	(void)             -
  * Expects : 	
@@ -179,8 +179,8 @@ void UArray2b_mapToFreeUArray2(int col, int row, UArray2_T array2,
 
 /*********************************UArray2b_width******************************
  * 
- * Inputs  :    (UArray2b_T) array2b -
- * Returns :	(int)                -
+ * Inputs  :    (UArray2b_T) array2b - Represent a 2-D array
+ * Returns :	(int)                - the width of the 2-D array
  * Expects : 	
  * Notes   :   	
  ****************************************************************************/
@@ -192,8 +192,8 @@ int UArray2b_width (UArray2b_T array2b)
 
 /********************************UArray2b_height*****************************
  * 
- * Inputs  :    (UArray2b_T) array2b -
- * Returns :	(int)                -
+ * Inputs  :    (UArray2b_T) array2b - Represents a 2-D array
+ * Returns :	(int)                - the height of the 2-D array
  * Expects : 	
  * Notes   :   	
  ****************************************************************************/
@@ -205,8 +205,8 @@ int UArray2b_height (UArray2b_T array2b)
 
 /********************************UArray2b_T***********************************
  * 
- * Inputs  :    (UArray2b_T) array2b -
- * Returns :	(int)                -
+ * Inputs  :    (UArray2b_T) array2b - Represents a 2-D array
+ * Returns :	(int)                - the size of the 2-D array
  * Expects : 	
  * Notes   :   	
  ****************************************************************************/
@@ -218,8 +218,8 @@ int UArray2b_size (UArray2b_T array2b)
 
 /********************************UArray2b_size********************************
  * 
- * Inputs  :    (UArray2b_T) array2b -
- * Returns :	(int)                -
+ * Inputs  :    (UArray2b_T) array2b - Represents a 2-D array
+ * Returns :	(int)                - the blocksize of the 2-D array
  * Expects : 	
  * Notes   :   	
  ****************************************************************************/
@@ -233,10 +233,10 @@ int UArray2b_blocksize(UArray2b_T array2b)
 */
 /*********************************UArray2b_at*********************************
  * 
- * Inputs  :    (UArray2b_T) array2b -
- *              (int) column         -
- *              (int) row            -
- * Returns :	(void)               -
+ * Inputs  :    (UArray2b_T) array2b - Represents a 2-D array 
+ *              (int) column         - Denotes a 2-D array column
+ *              (int) row            - Denotes a 2-D array row 
+ * Returns :	(void)               - nothing
  * Expects : 	
  * Notes   :   	
  ****************************************************************************/

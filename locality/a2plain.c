@@ -12,10 +12,10 @@
 
 /***********************************new**************************************
  * 
- * Inputs  :    (int) width         -
- *              (int) height        -
- *              (int) size          -
- * Returns :	(A2Methods_UArray2) -
+ * Inputs  :    (int) width         - Denotes the 2-D array's width
+ *              (int) height        - Denotes the 2-D array's height
+ *              (int) size          - Denotes the 2-D array's size
+ * Returns :	(A2Methods_UArray2) - a 2-D array
  * Expects : 	
  * Notes   :   	
  ****************************************************************************/
@@ -26,7 +26,7 @@ static A2Methods_UArray2 new(int width, int height, int size)
 
 /*****************************new_with_blocksize*****************************
  * 
- * Inputs  :    (int) width         -
+ * Inputs  :    (int) width         - Denotes 
  *              (int) height        -
  *              (int) size          -
  *              (int) blocksize     -
