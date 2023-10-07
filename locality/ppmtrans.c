@@ -147,7 +147,7 @@ int main(int argc, char *argv[])
         imageMapper(ppm, map, transform, timerFile);
 
         Pnm_ppmwrite(stdout, ppm);
-
+        Pnm_ppmfree(&ppm);
 
         if (timerFile != NULL) {
                 fclose(timerFile);
