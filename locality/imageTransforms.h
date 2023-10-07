@@ -1,3 +1,17 @@
+/**************************************************************
+ *                     imageTransforms.h
+ *
+ *     Assignment      : Locality
+ *     Authors         : Matthew Wong, Andersen Prince
+ *     Date            : 3 October 2023
+ *
+ *     Program Purpose : 
+ * 
+ *     Performs a set of functions for performing various 
+ *     transformations on images. Transformations include 
+ *     rotations, horizontal/vertial flips, and transpositions.  
+ ***************************************************************/
+
 #include <pnm.h>
 #include <a2methods.h>
 

@@ -1,3 +1,18 @@
+/**************************************************************
+ *                     imageTransforms.c
+ *
+ *     Assignment      : Locality
+ *     Authors         : Matthew Wong, Andersen Prince
+ *     Date            : 3 October 2023
+ *
+ *     Program Purpose : 
+ *     
+ *     Performs numerous modifications on photos stored in 
+ *     the PNM format. These transformations include rotations 
+ *     of 90, 180, and 270 degrees, flipping horizontally 
+ *     and vertically, and transposing the picture.
+ ***************************************************************/
+
 #include <pnm.h>
 #include <a2methods.h>
 #include <stdbool.h>

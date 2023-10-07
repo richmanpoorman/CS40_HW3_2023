@@ -1,10 +1,33 @@
+/**************************************************************
+ *                     timing_test.c
+ *
+ *     Assignment      : Locality
+ *     Authors         : Matthew Wong, Andersen Prince
+ *     Date            : 4 October 2023
+ *
+ *     Program Purpose : 
+ *
+ *     The program is used to test and measure the execution
+ *     duration of a loop, revealing information about the 
+ *     program's performance 
+ ***************************************************************/
+
 #include <stdlib.h>
 #include <stdio.h>
 #include "cputiming.h"
 
-
-int
-main(int argc, char *argv[])
+/*********************************main***************************************
+ * Purpose    :            
+ *      Measures the execution time of the operations  
+ * Parameters : 
+ *      (int)        argc      : The amount of command-line arguments
+ *      (char)       *argv[]   : An array of command line argument
+ * Returns    : 
+ *      (int)                  : The exit status
+ * Expects    :
+ *      None
+ ****************************************************************************/
+int main(int argc, char *argv[])
 {
         (void)argc;
         (void)argv;

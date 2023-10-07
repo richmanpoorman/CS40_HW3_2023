@@ -1,3 +1,17 @@
+/**************************************************************
+ *                     imageMapper.c
+ *
+ *     Assignment      : Locality
+ *     Authors         : Matthew Wong, Andersen Prince
+ *     Date            : 3 October 2023
+ *
+ *     Program Purpose : 
+ *     
+ *     Specifies a function called imageMapper that performs
+ *     image transformations while measuring the timing of the 
+ *     transformation.     
+ ***************************************************************/
+
 #include <pnm.h>
 #include <a2methods.h>
 #include <stdio.h>
