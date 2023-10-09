@@ -73,8 +73,8 @@ void imageMapper(Pnm_ppm ppm, A2Methods_mapfun map,
                 double      numPixels = ppm -> width * 
                                         ppm -> height;
                 
-                fprintf(timerFile, "Total Time: %.0fns\n", time);
-                fprintf(timerFile, "Time per pixel: %.0fns/px\n", 
+                fprintf(timerFile, "Total Time: %.0f ns\n", time);
+                fprintf(timerFile, "Time per pixel: %.0f ns/px\n", 
                         time / numPixels);
                 fprintf(timerFile, "\n");
         }
