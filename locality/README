@@ -9,9 +9,15 @@ Timing Table:
 We used a custom ppm called bigTest.ppm, with dimensions (8192 x 8192)
 
            |Total Time      | Time per pixel
+Row    0   |         865 ns |   0 ns/px
 Row    90  | 10300514578 ns | 153 ns/px
-Row    180 | 3723970005  ns | 55  ns/px
-Column 90  | 9297667496  ns | 139 ns/px
+Row    180 |  3723970005 ns |  55 ns/px
+Row    270 |  9643048111 ns | 144 ns/px
+Column 0   |         800 ns |   0 ns/px
+Column 90  |  9297667496 ns | 139 ns/px
 Column 180 | 14412940595 ns | 215 ns/px
-Block  90  | 6410109563  ns | 96  ns/px
-Block  180 | 6147835668  ns | 92  ns/px
+Column 270 |  8780674527 ns | 131 ns/px
+Block  0   |        1019 ns |   0 ns/px
+Block  90  |  6410109563 ns |  96 ns/px
+Block  180 |  6147835668 ns |  92 ns/px
+Block  270 |  6253260291 ns |  93 ns/px
