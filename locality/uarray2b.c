@@ -35,8 +35,9 @@ struct UArray2b_blockwise_closure {
 };
 
 /*********************************UArray2b_new*********************************
- * Purpose    :                   Creates a blocked 2-D array with the width,
- *                                height, size of each element, and blocksize
+ * Purpose    :                   
+ *      Creates a blocked 2-D array with the width, height, size of each 
+ *      element, and blocksize
  * Parameters : 
  *      (int)        width      : Denotes the 2-D array's width 
  *      (int)        height     : Denotes the 2-D array's height
@@ -44,11 +45,11 @@ struct UArray2b_blockwise_closure {
  *      (int)        blocksize  : Denotes the 2-D array's blocksizes
  * Returns    : 
  *      (UArray2b_T)            : A new 2-D blocked array
- * Expects    :                   The parameters should be integers greater 
- *                                than zero 
- * Notes      :                   Blocked 2-D array are split into blocks of 
- *                                elements to create efficient memory 
- *                                allocation
+ * Expects    :                   
+ *      The parameters should be integers greater than zero 
+ * Notes      :                   
+ *      Blocked 2-D array are split into blocks of elements to create efficient 
+ *      memory allocation
  ****************************************************************************/
 UArray2b_T UArray2b_new (int width, int height, int size, int blocksize);
 
@@ -69,23 +70,22 @@ UArray2b_T UArray2b_new (int width, int height, int size, int blocksize);
 UArray2b_T UArray2b_new_64K_block(int width, int height, int size);
 
 /*******************************UArray2b_free*********************************
- * Purpose    :                 Frees the memory created by the 2-D blocked
- *                              array
+ * Purpose    :                 
+ *      Frees the memory created by the 2-D blocked array
  * Parameters :  
  *      (UArray2b_T) *array2b : A pointer to a pointer to the blocked 2-D array
  * Returns    :  
  *      (void)                : nothing
  * Expects    :   
- *                              The 2-D array should be valid
+ *      The 2-D array should be valid
  * Notes      :                 
- *                              Sets the pointer to the blocked 2-D array to 
- *                              NULL
+ *      Sets the pointer to the blocked 2-D array to NULL
  ****************************************************************************/
 void UArray2b_free (UArray2b_T *array2b);
 
 /****************************UArray2b_mapToFreeUArray*************************
- * Purpose    :              Map function which is used to free the inner 2-D
- *                           array
+ * Purpose    :              
+ *      Map function which is used to free the inner 2-D array
  * Parameters :    
  *      (int)       col    : Denotes the 2-D array column index
  *      (int)       row    : Denotes the 2-D array row index
@@ -101,26 +101,27 @@ void UArray2b_mapToFreeUArray2(int col, int row, UArray2_T array2,
                            void *elem, void *cl);
                            
 /*********************************UArray2b_width******************************
- * Purpose    :                Retrieves the width of a blocked 2-D array
+ * Purpose    :                
+ *      Retrieves the width of a blocked 2-D array
  * Parameters :  
  *      (UArray2b_T) array2b - Represent a blocked 2-D array
  * Returns    :  
  *      (int)                - The width of the 2-D array
  * Expects    :    
- *                             Should be a valid blocked 2-D array
+ *      Should be a valid blocked 2-D array
  * Notes      :                
  *      Width represents the number of columns in the array
  ****************************************************************************/
 int UArray2b_width (UArray2b_T array2b);
 
 /********************************UArray2b_height*****************************
- * Purpose    :                 Retrieves the height of the 2-D blocked array
+ * Purpose    :                 
+ *      Retrieves the height of the 2-D blocked array
  * Parameters :    
  *      (UArray2b_T)  array2b : Represents a blocked 2-D array
  * Returns    :  
  *      (int)                 : The height of the 2-D array
- * Expects    :   
- *                              
+ * Expects    :                    
  *      The paramter should be a valid blocked 2-D array
  * Notes      :                 
  *      Gets and returns the height of the blocked 2-D array

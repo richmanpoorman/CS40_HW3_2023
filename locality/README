@@ -4,6 +4,8 @@ Hours: 24hr
 Simon and Aiden helped answer a question about strange coloring 
 with the pixels (I made sure not to show them the code)
 
+Architecture/Overview:
+The flag parcer, PNM reader, and writer are done for us in the starter code. That being said, we must implement a image mapper which will take in a Pnm_ppm, the A2_Me
 
 Timing Table:
 We used a custom ppm called bigTest.ppm, with dimensions (8192 x 8192)
