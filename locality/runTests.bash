@@ -20,7 +20,8 @@ TIMING_SUFFIX="Timing.txt"
 # imageTransform [imageName] [outputSuffix] [operation1] [operation2]
 imageTransform () {
         jpegtran $3 $IMAGE_PATH$1.jpg | djpeg | > $OUTPUT_PATH$1$2.out
-        djpeg $IMAGE_PATH$1.jpg | ./ppmtrans $3 $4 $5 | > $OUTPUT_PATH$1$2.ppm
+        djpeg $IMAGE_PATH$1.jpg | valgrind ./ppmtrans $3 $4 $5 \
+        | > $OUTPUT_PATH$1$2.ppm
         diff $OUTPUT_PATH$1$2.out $OUTPUT_PATH$1$2.ppm
         # ./ppmtrans $3 $4 $5 $IMAGE_PATH$1.ppm > \
         #                 $OUTPUT_PATH$1$2.ppm 
