@@ -57,4 +57,11 @@ Block  90  |  6410109563 ns |       96 ns/px |  96 instructions/px
 Block  180 |  6147835668 ns |       92 ns/px |  92 instructions/px
 Block  270 |  6253260291 ns |       93 ns/px |  93 instructions/px
 
+These results aligned mostly with our predicitions. For example, we predicted 
+that row 180 would be the fastest operations outside the 0 degree. On the other
+hand, we noticed that column 180 was the longest operation. Beyond this,
+we noticed that blocked arrays was pretty much consistent for most of the 
+operations that we ran. Meanwhile, other rotations such as row and column were
+pretty scattered when looking at the time per pixel. 
+
 Time Spent: We spent a total of 28hrs
