@@ -25,30 +25,9 @@
 /************************************************/
 
 struct small_closure {
-        A2Methods_smallapplyfun *apply; 
+        A2Methods_smallapplyfun *apply;
         void                    *cl;
 };
-
-static struct A2Methods_T uarray2_methods_plain_struct = {
-        new,
-        new_with_blocksize,
-        a2free,
-        width,
-        height,
-        size,
-        blocksize,
-        at,
-        map_row_major,
-        map_col_major,
-        NULL,                   /* map_block_major */
-        map_row_major,
-        small_map_row_major,
-        small_map_col_major,
-        NULL,                   /* small_map_block_major */
-        small_map_row_major
-};
-
-A2Methods_T uarray2_methods_plain = &uarray2_methods_plain_struct;
 
 /***********************************new**************************************
  * Purpose    :               
@@ -325,3 +304,24 @@ static void small_map_col_major(A2Methods_UArray2        a2,
         struct small_closure mycl = { apply, cl };
         UArray2_map_col_major(a2, apply_small, &mycl);
 }
+
+static struct A2Methods_T uarray2_methods_plain_struct = {
+        new,
+        new_with_blocksize,
+        a2free,
+        width,
+        height,
+        size,
+        blocksize,
+        at,
+        map_row_major,
+        map_col_major,
+        NULL,                   /* map_block_major */
+        map_row_major,
+        small_map_row_major,
+        small_map_col_major,
+        NULL,                   /* small_map_block_major */
+        small_map_row_major
+};
+
+A2Methods_T uarray2_methods_plain = &uarray2_methods_plain_struct;

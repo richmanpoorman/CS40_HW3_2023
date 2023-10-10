@@ -285,7 +285,7 @@ void UArray2b_free (UArray2b_T *array2b)
 {
         assert(array2b != NULL && *array2b != NULL);
         UArray2_T blocks = (*array2b) -> blocks;
-        UArray2_map_row_major((*array2b) -> blocks, 
+        UArray2_map_row_major(blocks, 
                               UArray2b_mapToFreeUArray2, NULL);
         UArray2_free(&blocks);
         FREE(*array2b);
