@@ -36,7 +36,7 @@ timer, runs the operation, and ends the timer. Finally, we also write to stdout
 using the pnm_ppm, allowing the client to see the image after the operation 
 that they ran. 
 
-Timing Table:
+Timing Table: 
 Computer Specs:
         Lenovo Legion 5
         64-bit operating system, x64-based processor

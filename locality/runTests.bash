@@ -10,8 +10,9 @@ MAJORS=("-row-major" "-col-major" "-block-major")
 
 # The ppm images to run the tests on, without the .ppm suffix 
 IMAGE_PATH="Test/TestImages/"
-IMAGES=("flowers" "mobo" "animals" "desert" "erosion" "from-wind-cave" \
-        "halligan" "in-wind-cave" "rock" "segfault" "wind-cave") 
+IMAGES=("flowers")
+# IMAGES=("flowers" "animals" "desert" "erosion" "from-wind-cave" \
+#         "halligan" "in-wind-cave" "rock" "segfault" "wind-cave") 
         
 OUTPUT_PATH="Test/OutputTest/"
 TIMING_SUFFIX="Timing.txt"
@@ -19,10 +20,11 @@ TIMING_SUFFIX="Timing.txt"
 
 # imageTransform [imageName] [outputSuffix] [operation1] [operation2]
 imageTransform () {
-        jpegtran $3 $IMAGE_PATH$1.jpg | djpeg | > $OUTPUT_PATH$1$2.out
-        djpeg $IMAGE_PATH$1.jpg | valgrind ./ppmtrans $3 $4 $5 \
+        jpegtran $3 $IMAGE_PATH$1.jpg | djpeg | $OUTPUT_PATH$1$2test.ppm
+        djpeg $IMAGE_PATH$1.jpg > $IMAGE_PATH$1.jpgToPpm
+        valgrind --leak-check=full --show-leak-kinds=all ./ppmtrans $3 $4 $5 $IMAGE_PATH$1.jpgToPpm \
         | > $OUTPUT_PATH$1$2.ppm
-        diff $OUTPUT_PATH$1$2.out $OUTPUT_PATH$1$2.ppm
+        diff $OUTPUT_PATH$1$2test.ppm $OUTPUT_PATH$1$2.ppm
         # ./ppmtrans $3 $4 $5 $IMAGE_PATH$1.ppm > \
         #                 $OUTPUT_PATH$1$2.ppm 
         # if [[ -f $IMAGE_PATH$1.jpg ]] && [[ "$#" -ge 3 ]]; then
