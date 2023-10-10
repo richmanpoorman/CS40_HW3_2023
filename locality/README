@@ -1,11 +1,40 @@
 # CS40_HW3_2023
-Hours: 24hr
+Authors: 
+Matthew Wong and Andersen Prince
 
+Help Recieved: 
 Simon and Aiden helped answer a question about strange coloring 
 with the pixels (I made sure not to show them the code)
 
-Architecture/Overview:
-The flag parcer, PNM reader, and writer are done for us in the starter code. That being said, we must implement a image mapper which will take in a Pnm_ppm, the A2_Me
+Overview:
+We have implemented the rotate 0, 90, 180, and 270 degrees, as well as the flip
+horizontal, flip vertical, transpose, and time operations in the correct way.  
+
+Architecture:
+            Image            Image         Rotated Image 
+/-----------\    /-----------\    /-----------\    /-----------\
+|   Flag    |---\|  Image    |---\|   Image   |---\|   Image   |______(STDOUT)     
+|   Parcer  |---/|  Reader   |---/|   Mapper  |---/|   Writer  |
+\-----------/    \-----------/    \-----------/    \-----------/
+            Methods             
+
+In our program we have four crucial modules, which is essentially the methods 
+we used to carry out the entire functionality of this assignment. As an 
+overview, we include a flag parcer, an image reader, an imageMapper, and a 
+image writer. The flag parcer determines which operation that the client 
+performs on an image. These operations include rotation 0, 90, 180, and 270 
+degrees, among others. In other words, it helps the computer decipher which of 
+the operations is called, giving the computer a way to call the right operation 
+on the image. The flag parcer essentially spits out an, image, the A2Methods, 
+as well as the timing file.  Adding to this, we also created an image reader 
+which helps us to read the provided image from the client. This gives us a way 
+to store this information in order to perform the operations listed above. 
+With this information, we feed it to our imageMapper. The imageMapper takes
+in an image, a A2Methods_mapfun function, the operation which is determined by 
+flag parcer, as well as the timing file. In essence, imageMapper begins the 
+timer, runs the operation, and ends the timer. Finally, we also write to stdout 
+using the pnm_ppm, allowing the client to see the image after the operation 
+that they ran. 
 
 Timing Table:
 We used a custom ppm called bigTest.ppm, with dimensions (8192 x 8192)
@@ -23,3 +52,5 @@ Block  0   |        1019 ns |   0 ns/px
 Block  90  |  6410109563 ns |  96 ns/px
 Block  180 |  6147835668 ns |  92 ns/px
 Block  270 |  6253260291 ns |  93 ns/px
+
+Time Spent: We spent a total of 28hrs
