@@ -451,7 +451,6 @@ void rotate90(Pnm_ppm ppm, A2Methods_mapfun map)
 {
         mapToNewImage(ppm, map, locationMapRotate90, true);
 }
-
 void locationMapRotate90(int col, int row, int width, int height, 
                          int *newCol, int *newRow)
 {

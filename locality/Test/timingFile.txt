@@ -34,3 +34,9 @@ Time per pixel: 131 ns/px
 Total Time: 6253260291 ns
 Time per pixel: 93 ns/px
 
+Total Time: 121086644455 ns
+Time per pixel: 2425 ns/px
+
+Total Time: 121028793116 ns
+Time per pixel: 2424 ns/px
+

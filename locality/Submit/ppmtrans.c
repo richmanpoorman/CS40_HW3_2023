@@ -1,17 +1,3 @@
-/**************************************************************
- *                     ppmtrans.c
- *
- *     Assignment      : Locality
- *     Authors         : Matthew Wong, Andersen Prince
- *     Date            : 4 October 2023
- *
- *     Program Purpose : 
- * 
- *     Process the command line argument that the client writes,
- *     such as the operations like rotate 0, 90, 180, 270, 
- *     among others.  
- ***************************************************************/
-
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -143,6 +129,7 @@ int main(int argc, char *argv[])
                 if (timerFile == NULL) {
                         fprintf(stderr, 
                                 "The Timer File can not be accessed\n");
+                        Pnm_ppmfree(&ppm);
                         exit(EXIT_FAILURE);
                 }
         }
