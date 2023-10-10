@@ -20,7 +20,7 @@
  *      (None) 
  * Expects    : 
  *      Expects the ppm to be a valid image, with the correctly set variables 
- *      inside, as well as the map function and transform function to be valid. 
+ *      inside, as well as the map function and transform function to be valid.
  *      The timerFile is expected to be NULL if the file is not to be written 
  *      to, and we are assuming the file is already opened to be written to. 
  *      The transform function is as follows:
