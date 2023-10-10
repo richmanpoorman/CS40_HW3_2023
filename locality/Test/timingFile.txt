@@ -1,0 +1,36 @@
+Total Time: 10300514578ns
+Time per pixel: 153ns/px
+
+Total Time: 3723970005ns
+Time per pixel: 55ns/px
+
+Total Time: 9297667496ns
+Time per pixel: 139ns/px
+
+Total Time: 14412940595ns
+Time per pixel: 215ns/px
+
+Total Time: 6410109563ns
+Time per pixel: 96ns/px
+
+Total Time: 6147835668ns
+Time per pixel: 92ns/px
+
+Total Time: 865 ns
+Time per pixel: 0 ns/px
+
+Total Time: 800 ns
+Time per pixel: 0 ns/px
+
+Total Time: 1019 ns
+Time per pixel: 0 ns/px
+
+Total Time: 9643048111 ns
+Time per pixel: 144 ns/px
+
+Total Time: 8780674527 ns
+Time per pixel: 131 ns/px
+
+Total Time: 6253260291 ns
+Time per pixel: 93 ns/px
+

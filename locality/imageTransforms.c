@@ -18,6 +18,8 @@
 #include <stdbool.h>
 #include "assert.h"
 
+#define ConstMethods const struct A2Methods_T *
+
 /* 
  *  TRANSFORMATION FUNCTIONS
  */
@@ -421,7 +423,7 @@ void mapToNewApplyFunction(int col, int row, A2Methods_UArray2 array2,
  * Parameter : 
  *      (Pnm_ppm)           ppm      : The image to change the values of 
  *      (A2Methods_UArray2) newImage : The new image to compare with
- *      (A2Methods_T)       methods  : The methods that contain the functions
+ *      (ConstMethods)      methods  : The methods that contain the functions
  *                                     to get the width and height of the 
  *                                     new image
  * Returns   : 
@@ -435,7 +437,7 @@ void mapToNewApplyFunction(int col, int row, A2Methods_UArray2 array2,
  *      Only sets the dimensions changed, as the image data stays the same
  ****************************************************************************/
 void setVariables(Pnm_ppm ppm, A2Methods_UArray2 newImage, 
-                  A2Methods_T methods);
+                  ConstMethods methods);
 
 
 /* Implementations */
@@ -523,7 +525,7 @@ void locationMapTranspose(int col, int row, int width, int height,
 /* Helpers */
 typedef struct ImageData {
         void (*locationMap)(int, int, int, int, int *, int *);
-        A2Methods_T       methods;
+        ConstMethods      methods;
         A2Methods_UArray2 newImage;
 } ImageData;
 
@@ -533,8 +535,8 @@ void mapToNewImage(Pnm_ppm ppm, A2Methods_mapfun map,
 {
         assert(ppm != NULL && map != NULL && locationMap != NULL);
 
-        A2Methods_T        methods   = (A2Methods_T) ppm -> methods;
-        A2Methods_UArray2  image     = ppm     -> pixels;
+        ConstMethods       methods   = ppm -> methods;
+        A2Methods_UArray2  image     = ppm -> pixels;
         
         assert(methods != NULL && image != NULL);
 
@@ -569,7 +571,7 @@ void mapToNewApplyFunction(int col, int row, A2Methods_UArray2 array2,
                            A2Methods_Object *ptr, void *cl) 
 {
         struct ImageData  *info     = cl;
-        A2Methods_T        methods  = info -> methods;
+        ConstMethods       methods  = info -> methods;
         A2Methods_UArray2  newImage = info -> newImage;
         int                height   = methods -> height(array2);
         int                width    = methods -> width(array2);
@@ -587,7 +589,7 @@ void mapToNewApplyFunction(int col, int row, A2Methods_UArray2 array2,
 }
 
 void setVariables(Pnm_ppm ppm, A2Methods_UArray2 newImage, 
-                  A2Methods_T methods) 
+                  ConstMethods methods) 
 {
         unsigned int newWidth  = methods -> width(newImage);
         unsigned int newHeight = methods -> height(newImage);
@@ -595,3 +597,5 @@ void setVariables(Pnm_ppm ppm, A2Methods_UArray2 newImage,
         ppm -> width  = newWidth;
         ppm -> height = newHeight;
 }
+
+#undef ConstMethods

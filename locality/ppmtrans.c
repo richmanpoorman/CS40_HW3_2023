@@ -126,7 +126,11 @@ int main(int argc, char *argv[])
         FILE *inputFile = stdin;
         if (i < argc) {
                 inputFile = fopen(argv[i], "r");
-                assert(inputFile != NULL);
+                if (inputFile == NULL) {
+                        fprintf(stderr, 
+                                "The Image File can not be accessed\n");
+                        exit(EXIT_FAILURE);
+                }
         }
         Pnm_ppm ppm = Pnm_ppmread(inputFile, methods); 
         if (i < argc) {
@@ -136,10 +140,13 @@ int main(int argc, char *argv[])
         FILE *timerFile = NULL;
         if (time_file_name != NULL) {
                 timerFile = fopen(time_file_name, "a");
-                assert(timerFile != NULL);
+                if (timerFile == NULL) {
+                        fprintf(stderr, 
+                                "The Timer File can not be accessed\n");
+                        exit(EXIT_FAILURE);
+                }
         }
 
-        // TODO: Decide which function to run...
         void (*transform)(Pnm_ppm, A2Methods_mapfun) = NULL;
         if (hasTranspose) {
                 transform = *transpose;
