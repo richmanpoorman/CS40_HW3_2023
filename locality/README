@@ -9,6 +9,11 @@ with the pixels (I made sure not to show them the code)
 Overview:
 We have implemented the rotate 0, 90, 180, and 270 degrees, as well as the flip
 horizontal, flip vertical, transpose, and time operations in the correct way.
+Note that multiple flags is undefined behavior. In addition, the bash file
+works with tests we had in our folder. However, the tests are too big
+so the submission refuses to handle it. Thus, the bash file tests worked
+for the most part (except for the fact that jpegtrans didn't work on our
+images) but we were able to run it
 
 Architecture:
             Image            Image         Rotated Image 

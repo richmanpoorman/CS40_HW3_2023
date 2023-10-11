@@ -1,3 +1,16 @@
+/**************************************************************
+ *                     imageMapper.h
+ *
+ *     Assignment      : Locality
+ *     Authors         : Matthew Wong, Andersen Prince
+ *     Date            : 3 October 2023
+ *
+ *     Program Purpose : 
+ * 
+ *     Specify the interface for a function called imageMapper
+ *     that takes an image, performs transformations, measure 
+ *     the timing of it.
+ ***************************************************************/
 #include <pnm.h>
 #include <a2methods.h>
 #include <stdio.h>

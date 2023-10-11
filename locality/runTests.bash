@@ -25,7 +25,7 @@ imageTransform () {
         # djpeg $IMAGE_PATH$1.jpg > $IMAGE_PATH$1.jpgToPpm | \
         # valgrind --leak-check=full --show-leak-kinds=all \
         djpeg $IMAGE_PATH$1.jpg | \
-        ./ppmtrans \
+        valgrind ./ppmtrans \
                 $3 $4 $5 \
                 > $OUTPUT_PATH$1$2.ppm
 
