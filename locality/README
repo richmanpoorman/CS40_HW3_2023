@@ -16,6 +16,7 @@ for the most part (except for the fact that jpegtrans didn't work on our
 images) but we were able to run it
 
 Architecture:
+(We attached a file named architecture overview in our final submission)
             Image            Image         Rotated Image 
 /-----------\    /-----------\    /-----------\    /-----------\
 |   Flag    |---\|  Image    |---\|   Image   |---\|   Image   |______(STDOUT)
