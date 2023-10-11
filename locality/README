@@ -64,4 +64,4 @@ we noticed that blocked arrays was pretty much consistent for most of the
 operations that we ran. Meanwhile, other rotations such as row and column were
 pretty scattered when looking at the time per pixel. 
 
-Time Spent: We spent a total of 28hrs
+Time Spent: We spent a total of 33hrs
