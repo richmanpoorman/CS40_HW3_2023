@@ -10,9 +10,9 @@ MAJORS=("-row-major" "-col-major" "-block-major")
 
 # The ppm images to run the tests on, without the .ppm suffix 
 IMAGE_PATH="Test/TestImages/"
-# IMAGES=("flowers")
-IMAGES=("flowers" "animals" "desert" "erosion" "from-wind-cave" \
-        "halligan" "in-wind-cave" "rock" "segfault" "wind-cave") 
+IMAGES=("mobo")
+# IMAGES=("flowers" "animals" "desert" "erosion" "from-wind-cave" \
+#         "halligan" "in-wind-cave" "rock" "segfault" "wind-cave") 
         
 OUTPUT_PATH="Test/OutputTest/"
 TIMING_SUFFIX="Timing.txt"

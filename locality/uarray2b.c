@@ -48,7 +48,7 @@ struct UArray2b_blockwise_closure {
  * Expects    :                   
  *      The parameters should be integers greater than zero 
  * Notes      :                   
- *      Blocked 2-D array are split into blocks of elements to create efficient 
+ *      Blocked 2-D array are split into blocks of elements to create efficient
  *      memory allocation
  ****************************************************************************/
 UArray2b_T UArray2b_new (int width, int height, int size, int blocksize);
@@ -165,12 +165,13 @@ int UArray2b_blocksize(UArray2b_T array2b);
  *      (int)           column  : Denotes a 2-D array column
  *      (int)           row     : Denotes a 2-D array row 
  * Returns   :  
- *      (void *)                : A pointer to the element at the column/row in 
+ *      (void *)                : A pointer to the element at the column/row in
  *                                the 2-D array
  * Expects   :
  *      The paramter should be a valid blocked 2-D array
  * Notes     :     
- *      Allows acess to a specific element (column/row) in the blocked 2-D array
+ *      Allows acess to a specific element (column/row) in the 
+ *      blocked 2-D array
  ****************************************************************************/
 void *UArray2b_at(UArray2b_T array2b, int column, int row);
 
